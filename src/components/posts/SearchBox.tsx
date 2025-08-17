@@ -1,22 +1,45 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function SearchBox({ q: initialQ }: { q?: string }) {
     const router = useRouter();
     const [q, setQ] = useState(initialQ ?? '');
+    const timerRef = useRef<number | undefined>(undefined);
+
+    const currentQueryString = useMemo(() => {
+        const searchParams = new URLSearchParams(router.query as Record<string, string>);
+
+        return searchParams.toString();
+    }, [router.query]);
 
     useEffect(() => {
+        if (!router.isReady) return;
+
+        const next = new URLSearchParams(router.query as Record<string, string>);
+        if (q) next.set('q', q); else next.delete('q');
+        next.set('page', '1');
+
+        const nextQs = next.toString();
+
+        if (nextQs === currentQueryString) return;
+
+        if (timerRef.current !== undefined) {
+            window.clearTimeout(timerRef.current);
+        }
+
         // самодельный debounce
-        const t = setTimeout(() => {
-            const searchParams = new URLSearchParams(router.query as Record<string, string>);
-            if (q) searchParams.set('q', q); else searchParams.delete('q');
-            searchParams.set('page', '1');
-            router.push(`/posts?${searchParams.toString()}`, undefined, { scroll: false });
+        timerRef.current = window.setTimeout(() => {
+            router.push(`/posts?${nextQs}`, undefined, {
+                shallow: true,
+                scroll: false,
+            });
         }, 300);
 
-        return () => clearTimeout(t);
-    }, [q, router]);
+        return () => {
+            if (timerRef.current !== undefined) window.clearTimeout(timerRef.current);
+        };
+    }, [q, currentQueryString, router]);
 
     return (
         <div className="relative">
