@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { fetchCommentsForPost, fetchPost, fetchUser } from '@/lib/api';
 import { Comment, Post, User } from "@/lib/types";
 import { usePageLoading } from "@/components/hooks/usePageLoading";
-import {AuthorPageSkeleton} from "@/components/ui/AuthorPageSkeleton";
+import { AuthorPageSkeleton } from "@/components/ui/AuthorPageSkeleton";
 
 export default function PostPage({ post, user, comments }:{ post: Post; user: User; comments: Comment[] }) {
     const loading = usePageLoading();
@@ -46,8 +46,8 @@ export default function PostPage({ post, user, comments }:{ post: Post; user: Us
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-    const posts = await res.json();
-    const paths = posts.slice(0, 20).map((p: any) => ({ params: { id: String(p.id) } }));
+    const posts = (await res.json()) as Array<Pick<Post, 'id'>>;
+    const paths = posts.slice(0, 20).map((p) => ({ params: { id: String(p.id) } }));
 
     return { paths, fallback: 'blocking' };
 };

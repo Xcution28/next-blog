@@ -16,7 +16,7 @@ export default function SearchBox({ q: initialQ }: { q?: string }) {
         }, 300);
 
         return () => clearTimeout(t);
-    }, [q]);
+    }, [q, router]);
 
     return (
         <div className="relative">
