@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
@@ -16,21 +14,33 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Task
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Цель:
+Создать небольшое приложение на Next.js с использованием Tailwind CSS, которое получает и отображает данные с публичного API JSONPlaceholder (https://jsonplaceholder.typicode.com/).
 
-## Learn More
+Требования:
+Главная страница
 
-To learn more about Next.js, take a look at the following resources:
+Отобразить список постов (/posts).
+Для каждого поста показать: заголовок, краткое описание (первые 100 символов body), кнопку "Подробнее".
+Страница поста
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+При клике на "Подробнее" — переход на отдельную страницу поста (/posts/[id]).
+На странице поста отобразить: заголовок, полный текст, имя автора (получить по userId), список комментариев к посту.
+UI и стили
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Использовать Tailwind CSS для стилизации.
+Сделать адаптивную верстку.
+Реализовать skeleton loading для списка постов и страницы поста.
+Бонус
 
-## Deploy on Vercel
+Реализовать поиск по заголовку поста на главной странице.
+Добавить пагинацию (например, по 10 постов на страницу).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Критерии оценки:
+Чистота и структура кода.
+Использование возможностей Next.js (getStaticProps/getServerSideProps, динамические маршруты).
+Качественная верстка с Tailwind CSS.
+Реализация загрузки и обработки данных с API.
+Адаптивность и UX.
